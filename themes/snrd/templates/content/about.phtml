@@ -1,0 +1,23 @@
+<? $this->headTitle($this->translate('About us')); ?>
+<? $this->layout()->breadcrumbs = '<li><a href="http://argentina.gob.ar/">' .  $this->translate('Home') . '</a></li><li><a href="https://www.argentina.gob.ar/ciencia">Ministerio de Ciencia, Tecnología e Innovación Productiva</a></li><li><a href="https://www.argentina.gob.ar/ciencia/snrd">SNRD</a><li class="active">' . $this->translate('About us') . '</li> '; ?>
+<div class="container">
+  <section>
+    <article class="content_format row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1 class="activities-sidbar">Sistema Nacional de Repositorios Digitales</h1>
+        <hr>
+        <h2><?= $this->transEsc('About us') ?> </h2>
+
+        <p class="text-justify"><?= $this->translate('home_intro_text1') ?></p>
+
+        <p class="text-justify"><?= $this->translate('home_intro_text2') ?></p>
+
+        <h2><?= $this->transEsc('open_access') ?></h2>
+
+        <?= $this->translate('open_access_text') ?>
+
+      </div>
+    </article>
+  </section>
+
+</div>

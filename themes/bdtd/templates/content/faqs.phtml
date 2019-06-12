@@ -1,0 +1,46 @@
+<!--link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" -->
+<div class="col-xs-12" id="faqs">
+	<div class="col-xs-12">
+		<h2 class="titleText">FAQs</h2>
+		<h4><span class="subTitText"> PERGUNTAS FREQUENTES SOBRE A BIBLIOTECA DIGITAL BRASILEIRA DE TESES E DISSERTAÇÕES (BDTD)</span></h4>
+		<p class="text">
+			<ol>			
+				<li>
+					O que é a Biblioteca Digital Brasileira de Teses e Dissertações (BDTD)? 
+					<!--a id="descBdtd" href="#" onclick="showDesc(this);"> <span class="fa fa-plus-circle fa-1x iconGreen" ></span></a-->
+					
+					<span class="descBdtd disable">
+						O Sistema de Publicação Eletrônica de Teses e Dissertações (TEDE) é uma solução tecnológica desenvolvida pelo IBICT e repassada gratuitamente às instituições de ensino e pesquisa para que possam gerenciar suas teses e dissertações.						
+					</span>
+				</li>
+				<li>
+					O que é o Sistema de Publicação Eletrônica de Teses e Dissertações (TEDE)?
+					<a id="descTede" href="#" onclick="showDesc(this);"> <span class="fa fa-plus-circle fa-1x iconGreen" ></span></a>
+					<span class="descTede disable">
+						O Sistema de Publicação Eletrônica de Teses e Dissertações (TEDE) é uma solução tecnológica desenvolvida pelo IBICT e repassada gratuitamente às instituições de ensino e pesquisa para que possam gerenciar suas teses e dissertações.						
+					</span>
+				</li>
+				<li>
+					Minha instituição não participa da BDTD. Posso ter minha dissertação e/ou tese coletada pela BDTD? 
+					<a id="partBdtd" href="#" onclick="showDesc(this);"> <span class="fa fa-plus-circle fa-1x iconGreen" ></span></a>
+					<span class="partBdtd disable">
+						Sim. Para isso, é necessário que você realize o depósito de sua pesquisa no Deposita. Saiba mais sobre o Deposita, clique <a href="http://deposita.ibict.br/" target="_blank">aqui.</a> 
+					</span>
+				</li>
+
+				
+			</ol>
+		</p>	
+	</div>
+</div>
+
+<script type="text/javascript">
+	function showDesc(id){
+		var field = "." + id.id;
+		$(field).show(1000);
+
+		$('#' + id.id +'> span').toggleClass('fa-minus-circle iconGreen iconRed').delay(2000);
+		$('.' + id.id).toggleClass('disable active').delay(2000);
+
+	}
+</script>

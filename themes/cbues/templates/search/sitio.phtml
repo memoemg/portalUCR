@@ -1,0 +1,77 @@
+<? $this->headTitle($this->translate('Home')); ?>
+
+<div class="container">
+<div class="jumbotron franja-presentacion">
+   <div class="row">
+        <div class="col-sx-12 col-sm-6">
+            <h1 class="h1 header">  <span style="background: #432B13;"> ACCES</span></h1>
+            <p class="subheader" ><small><span style="background: #432B13;">Acceso a la Ciencia y la Cultura de El Salvador</span></small></p>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <div class="searchHomeContent">
+            <h2 class="h2"><i class="fa fa-search"></i> <?= $this->transEsc('Search') ?></h2>
+  <?
+  $ilsStatusScript = <<<JS
+$(document).ready(function() {
+  $.ajax({
+      dataType: 'json',
+      method: 'GET',
+      data: {'offlineModeMsg':'ils_offline_home_message'},
+      url: VuFind.path + '/AJAX/JSON?method=getIlsStatus',
+      success: function(response) {
+          $('.searchHomeContent').prepend(response.data);
+      }
+  });
+});
+JS;
+        ?>
+            <?=$this->inlineScript(\Zend\View\Helper\HeadScript::SCRIPT, $ilsStatusScript, 'SET'); ?>
+            <?=$this->context($this)->renderInContext("search/searchbox.phtml", ['ignoreHiddenFilterMemory' => true])?>
+            <?=$this->inlineScript(\Zend\View\Helper\HeadScript::SCRIPT, '$("#searchForm_lookfor").focus();', 'SET'); ?>
+            </div>
+       </div>
+       </div>
+  </div>
+</div>
+<div class="container main-info">
+    <script>
+        $.ajax({
+            type: 'GET',
+            url: '/vufind/api/v1/search?type=AllFields&page=0&limit=0&lng=<?=$this->layout()->userLang?>',
+            success: function(data){
+                $('#totalRecords').html(addSeparator(data.resultCount));
+            }
+    });
+    $.ajax({
+            type: 'GET',
+            url: '/vufind/api/v1/search?type=AllFields&page=0&limit=0&lng=<?=$this->layout()->userLang?>&facet[]=reponame_str',
+            success: function(data){
+                $('#totalRepos').html(addSeparator(data.facets.reponame_str.length));
+            }
+    });
+    $.ajax({
+            type: 'GET',
+            url: '/vufind/api/v1/search?type=AllFields&page=0&limit=0&lng=<?=$this->layout()->userLang?>&facet[]=instname_str',
+            success: function(data){
+                $('#totalInstitutions').html(addSeparator(data.facets.instname_str.length));
+            }
+    });
+    </script>
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="stats-home table-responsive">
+                <tr><td id="totalRecords"></td><td id="totalRepos"></td><td id="totalInstitutions"></td></tr>
+                <tr><td><?= $this->transEsc('Publicaciones')?></td><td><?= $this->transEsc('Repositorios')?></td><td><?= $this->transEsc('Instituciones')?></td></tr>
+            </table>
+        </div>
+        <div class="col-sm-12">
+            <h2 class="h2 page-header">ACCES</h2>
+
+            <p class="text-justify" style="color:#432B13;">Acceso a la Ciencia y la Cultura de El Salvador - ACCES es un portal creado por el Consorcio de Bibliotecas Universitarias de El Salvador – <a href="http://www.cbues.org.sv/">CBUES</a>, en colaboración con el <a href="http://www.mined.gob.sv/">Ministerio de Educación</a>, <a href="http://www.cienciaytecnologia.edu.sv/">Viceministerio de Ciencia y Tecnología</a> y el apoyo técnico de la <a href="http://www.lareferencia.info/joomla/es/">LA Referencia</a>, tiene como objetivo principal centralizar, preservar y promover en Acceso Abierto la producción académica, científica e histórica del país.</p>
+              <p class="text-justify" style="color:#432B13;">  
+ACCES pretende facilitar el acceso en línea y dar mayor visibilidad a la producción académica, científica y documental llevada a cabo en El Salvador en las diferentes Instituciones de educación superior, centros de investigación y otras instancias relevantes del país como instituciones de gobierno y organismos no gubernamentales que contribuyan al desarrollo científico y tecnológico del país.</p>
+<p class="text-justify" style="color:#432B13;">  
+Acceso a la Ciencia y la Cultura de El Salvador - ACCES es el nodo de conexión de país para la Red de Repositorios de Acceso Abierto a la Ciencia conocida como <a href="http://www.lareferencia.info/joomla/es/">LA Referencia</a>
+</p>
+    </div>
+</div>

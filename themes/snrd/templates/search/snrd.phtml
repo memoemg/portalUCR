@@ -1,0 +1,218 @@
+<? $this->headTitle($this->translate('SNRD')); ?>
+<? $this->layout()->breadcrumbs = false; ?>
+
+<div class="region region-content">
+  <div class="panel-pane pane-imagen-destacada">
+    <div class="pane-content">
+      <section class="jumbotron" style="background-image:url('/vufind/themes/snrd/images/2.jpg');">
+        <div class="jumbotron_bar">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <ol class="breadcrumb pull-left"><li><a href="https://www.argentina.gob.ar" target="_blank">Inicio</a></li>
+                  <li>
+                    <a href="https://www.argentina.gob.ar/ciencia">Ministerio de Ciencia, Tecnología e Innovación Productiva</a>
+                  </li>
+                  <li>
+                    <a href="https://www.argentina.gob.ar/ciencia">Biblioteca Electrónica de Ciencia y Tecnología</a>
+                  </li>
+                  <li class="active">Sistema Nacional de Repositorios Digitales</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="jumbotron_body">
+          <div class="container">
+            <div class="row">
+              <div class="col-xs-12 text-center">
+                <h1>Sistema Nacional de Repositorios Digitales</h1><br>
+                <p>La producción científica argentina al alcance de todos</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="overlay"></div>
+      </section>
+    </div>
+  </div>
+</div>
+
+  <script>
+    $.ajax({
+      type: 'GET',
+      url: '/vufind/api/v1/search?type=AllFields&page=0&limit=0&lng=<?= $this->layout()->userLang ?>',
+      success: function (data) {
+        $('#totalRecords').html(addSeparator(data.resultCount));
+      }
+    });
+    $.ajax({
+      type: 'GET',
+      url: '/vufind/api/v1/search?type=AllFields&page=0&limit=0&lng=<?= $this->layout()->userLang ?>&facet[]=reponame_str',
+      success: function (data) {
+        $('#totalRepos').html(addSeparator(data.facets.reponame_str.length));
+      }
+    });
+    $.ajax({
+      type: 'GET',
+      url: '/vufind/api/v1/search?type=AllFields&page=0&limit=0&lng=<?= $this->layout()->userLang ?>&facet[]=instname_str',
+      success: function (data) {
+        $('#totalInstitutions').html(addSeparator(data.facets.instname_str.length));
+      }
+    });
+  </script>
+  
+  <section class="modulo-busqueda">
+    <div class="container">
+                <div class="row">
+              <div class="col-md-12">
+                <h2 class="text-center">¿Qué estás buscando?</h2>
+              </div>
+            </div>
+                  <div class="row">
+              <div id="buscador" class="col-md-11 col-md-offset-1">
+  <?
+  $ilsStatusScript = <<<JS
+$(document).ready(function() {
+  $.ajax({
+      dataType: 'json',
+      method: 'GET',
+      data: {'offlineModeMsg':'ils_offline_home_message'},
+      url: VuFind.path + '/AJAX/JSON?method=getIlsStatus',
+      success: function(response) {
+          $('.searchHomeContent').prepend(response.data);
+      }
+  });
+});
+JS;
+        ?>
+          <?= $this->inlineScript(\Zend\View\Helper\HeadScript::SCRIPT, $ilsStatusScript, 'SET'); ?>
+          <?= $this->context($this)->renderInContext("search/searchbox.phtml", ['ignoreHiddenFilterMemory' => true]) ?>
+          <?= $this->inlineScript(\Zend\View\Helper\HeadScript::SCRIPT, '$("#searchForm_lookfor").focus();', 'SET'); ?>
+              </div>
+            </div>
+    </div>
+  </section>
+
+  <section class="bg-gray modulo-numeros">
+<div class="container main-info">
+  <div class="row numbers">
+    <div class="col-sm-4 text-center">
+      <div class="h2 text-arandano" id="totalRecords"></div>
+      <p class="lead"><?= $this->transEsc('publications') ?></p>
+    </div>
+    <div class="col-sm-4 text-center">
+      <div class="h2 text-uva" id="totalRepos"></div>
+      <p class="lead"><?= $this->transEsc('repositories') ?></p>
+    </div>
+    <div class="col-sm-4 text-center">
+      <div class="h2 text-lima" id="totalInstitutions"></div>
+      <p class="lead"><?= $this->transEsc('institutions') ?></p>
+    </div>
+    </div>
+  </div>
+</section>
+  
+  <section>
+    <div class="container">
+      <div class="panel-pane pane-texto"><div class="pane-content"><div class=""><h3>El Sistema</h3></div></div></div>
+      <div class="panel-separator"></div>
+      <div class="row panels-row">
+        <div class="col-xs-12 col-sm-4">
+          <a class="panel panel-default" href="#">
+            <div style="background-image:url('/vufind/themes/snrd/images/snrd.jpg');" class="panel-heading"></div>
+            <div class="panel-body">
+              <h3><?= $this->transEsc('About us') ?></h3>
+              <p class="text-muted">Sistema Nacional de Repositorios Digitales</p>
+            </div>
+          </a>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <a class="panel panel-default" href="<?=$this->url('content-page', ['page' => 'repos']) ?>">
+            <div style="background-image:url('/vufind/themes/snrd/images/repos.jpg');" class="panel-heading"></div>
+            <div class="panel-body">
+              <h3><?=$this->transEsc("Repositories")?></h3>
+              <p class="text-muted">Conocé cuáles son los repositorios que cosechamos</p>
+            </div>
+          </a>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <a class="panel panel-default" href="<?=$this->url('content-page', ['page' => 'stats']) ?>">
+            <div style="background-image:url('/vufind/themes/snrd/images/stats.jpg');" class="panel-heading"></div>
+            <div class="panel-body">
+              <h3><?=$this->transEsc("Statistics")?></h3>
+              <p class="text-muted">Estadísticas del Sistema Nacional</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+    <section>
+    <div class="container">
+      <div class="panel-pane pane-texto"><div class="pane-content"><div class=""><h3>Somos parte de</h3></div></div></div>
+      <div class="panel-separator"></div>
+      <div class="row panels-row">
+        <div class="col-xs-12 col-sm-6">
+          <a class="panel panel-default" href="://www.lareferencia.info/" target="_blank">
+            <div style="background-image:url('/vufind/themes/snrd/images/larefencia.png'); background-repeat: no-repeat; background-size: auto;" class="panel-heading"></div>
+            <div class="panel-body">
+              <h3><?= $this->transEsc('About us') ?></h3>
+              <p class="text-muted">LA Referencia</p>
+            </div>
+          </a>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <a class="panel panel-default" href="//www.coar-repositories.org/" target="_blank">
+            <div style="background-image:url('/vufind/themes/snrd/images/coar.png'); background-repeat: no-repeat; background-size: 50%;" class="panel-heading"></div>
+            <div class="panel-body">
+              <h3><?=$this->transEsc("Repositories")?></h3>
+              <p class="text-muted">Conference of Open Access Repositories</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-gray modulo-contacto">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+          <h2 class="h3 section-title">Datos de Contacto</h2>
+          <div>
+            <h5>Sistema Nacional de Repositorios Digitales</h5>
+            <p class="margin-40">
+              <strong>Dirección:</strong> Godoy Cruz 2320. Ciudad Autónoma de Buenos Aires<br>
+              <strong>Código postal:</strong> C1425FQD<br>
+              <strong>Teléfono:</strong> (+54 11) 4899-5000 int. 2190, 2174, 2182 y 2184<br>
+              <strong>Correo electrónico:</strong> <a href="mailto:repositorios@mincyt.gob.ar">repositorios@mincyt.gob.ar</a>
+            </p>
+            <h5>Redes sociales del área</h5>
+            <div class="social-share">
+              <ul class="list-inline">
+                <li><a href="http://www.facebook.com/ministeriodeciencia"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="http://www.twitter.com/min_ciencia"><i class="fa fa-twitter "></i></a></li>
+                <li><a href="http://www.instagram.com/min_ciencia"><i class="fa fa-instagram"></i></a></li>
+                <li><a href="http://www.youtube.com/user/MinisterioDeCiencia"><i class="fa fa-youtube"></i></a></li>
+                <li><a href="http://www.flickr.com/ministeriodeciencia"><i class="fa fa-flickr"></i></a></li>
+              </ul>
+            </div>
+          </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div>
+          <h2 class="h3 section-title">Envianos tu consulta</h2>
+          <form>
+            <div class="form-group">
+              <label class="text-muted">Escribí tu mensaje o consulta para el SNRD</label>
+              <textarea class="form-control" rows="3" placeholder=""></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Enviar mi consulta</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

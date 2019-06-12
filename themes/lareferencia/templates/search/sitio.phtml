@@ -1,0 +1,72 @@
+<? $this->headTitle($this->translate('Home')); ?>
+
+<div class="container">
+<div class="jumbotron franja-presentacion">
+   <div class="row">
+        <div class="col-sx-12 col-sm-6">
+            <h1 class="h1 header">Nombre del repositorio</h1>
+            <p class="subheader"><small>Subtítulo o lema</small></p>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <div class="searchHomeContent">
+            <h2 class="h2"><i class="fa fa-search"></i> <?= $this->transEsc('Search') ?></h2>
+  <?
+  $ilsStatusScript = <<<JS
+$(document).ready(function() {
+  $.ajax({
+      dataType: 'json',
+      method: 'GET',
+      data: {'offlineModeMsg':'ils_offline_home_message'},
+      url: VuFind.path + '/AJAX/JSON?method=getIlsStatus',
+      success: function(response) {
+          $('.searchHomeContent').prepend(response.data);
+      }
+  });
+});
+JS;
+        ?>
+            <?=$this->inlineScript(\Zend\View\Helper\HeadScript::SCRIPT, $ilsStatusScript, 'SET'); ?>
+            <?=$this->context($this)->renderInContext("search/searchbox.phtml", ['ignoreHiddenFilterMemory' => true])?>
+            <?=$this->inlineScript(\Zend\View\Helper\HeadScript::SCRIPT, '$("#searchForm_lookfor").focus();', 'SET'); ?>
+            </div>
+       </div>
+       </div>
+  </div>
+</div>
+<div class="container main-info">
+    <script>
+        $.ajax({
+            type: 'GET',
+            url: '/vufind/api/v1/search?type=AllFields&page=0&limit=0&lng=<?=$this->layout()->userLang?>',
+            success: function(data){
+                $('#totalRecords').html(addSeparator(data.resultCount));
+            }
+    });
+    $.ajax({
+            type: 'GET',
+            url: '/vufind/api/v1/search?type=AllFields&page=0&limit=0&lng=<?=$this->layout()->userLang?>&facet[]=reponame_str',
+            success: function(data){
+                $('#totalRepos').html(addSeparator(data.facets.reponame_str.length));
+            }
+    });
+    $.ajax({
+            type: 'GET',
+            url: '/vufind/api/v1/search?type=AllFields&page=0&limit=0&lng=<?=$this->layout()->userLang?>&facet[]=instname_str',
+            success: function(data){
+                $('#totalInstitutions').html(addSeparator(data.facets.instname_str.length));
+            }
+    });
+    </script>
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="stats-home table-responsive">
+                <tr><td id="totalRecords"></td><td id="totalRepos"></td><td id="totalInstitutions"></td></tr>
+                <tr><td><?= $this->transEsc('publications')?></td><td><?= $this->transEsc('repositories')?></td><td><?= $this->transEsc('institutions')?></td></tr>
+            </table>
+        </div>
+        <div class="col-sm-12">
+            <h2 class="h2 page-header">Encabezamiento</h2>
+
+            <p class="text-justify">Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing elit</a>. Aliquam pellentesque congue mattis. Sed luctus velit mi, et cursus sem luctus at. In tristique lectus ut leo rutrum, eget faucibus dolor ultrices. Sed at sollicitudin ligula, sed blandit massa. Vestibulum arcu mi, placerat vel nisi nec, vehicula bibendum elit. Nullam cursus, turpis commodo tristique sagittis, purus eros interdum eros, ut dictum neque eros nec lorem. Vestibulum mattis ligula ut odio viverra condimentum. Praesent ultricies risus in dolor viverra, ut pretium dolor euismod. Nunc non volutpat felis. In imperdiet libero pellentesque mi scelerisque congue. Maecenas nulla felis, rutrum ac erat eu, dictum feugiat ligula. Aenean molestie consectetur lorem et tincidunt. Ut quis eleifend lectus. Quisque ultrices vehicula accumsan. Mauris pellentesque malesuada ipsum eu rutrum. Proin ultrices metus non tempus accumsan.</p>
+    </div>
+</div>

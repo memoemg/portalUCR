@@ -1,0 +1,40 @@
+<? $this->headTitle($this->translate('About us')); ?>
+<? $this->layout()->breadcrumbs = '<li class="active"><a href="'.$this->url('home').'">' .  $this->translate('Home') . '</a></li><li class="active">' . $this->translate('About us') . '</li> '; ?>
+<div class="container main-info">
+    <h2><?= $this->transEsc('About us')?> </h2>
+    <h1>Sistema Nacional de Repositorios Digitales</h1>
+
+    <p class="text-justify"><?= $this->translate('home_intro_text1') ?></p>
+
+    <p class="text-justify"><?= $this->translate('home_intro_text2') ?></p>
+
+    <h2><?= $this->transEsc('Participate') ?></h2>
+
+    <?= $this->translate('about_text1')?>
+
+    <h2><?= $this->transEsc('Funding') ?></h2>
+
+    <?= $this->translate('about_text2')?>
+
+    <h2><?= $this->transEsc('Guidelines')?></h2>
+
+    <?= $this->translate('about_text3')?>
+
+    <h2><?= $this->transEsc('Law') ?></h2>
+
+    <?= $this->translate('about_text4')?>
+
+    <h2><?= $this->transEsc('Contact') ?></h2>
+
+    <h4>Secretaría Ejecutiva<br>Sistema Nacional de Repositorios Digitales (SNRD) / Biblioteca Electrónica de Ciencia y Tecnología<br>Subsecretaría de Coordinación Institucional<br>Secretaría de Articulación Científico Tecnológica<br>Ministerio de Ciencia, Tecnología e Innovación Productiva</h4>
+    <p><b><?= $this->transEsc('Staff') ?>:</b><br> Paola A. Azrilevich (<?= $this->transEsc('coordinator') ?>)<br>Alberto Apollaro<br>Sofía Iurissevich<br>Agustina Roldán</p>
+
+    <p>Tel/Fax: (+54-11) 4899-5000 ext. 4232, 4228, 4230 y 4234<br><a href="mailto:repositorios@mincyt.gob.ar">repositorios@mincyt.gob.ar</a><br>Godoy Cruz 2320, 4º piso<br>(C1425FQD) Ciudad Autónoma de Buenos Aires - República Argentina</p>
+
+    <hr />
+
+    <p><a href="http://www.amcharts.com/javascript-charts/" target="_blank" style="display: inline !important"><?= $this->transEsc('Graphics amCharts')?></a>.</p>
+
+    <p><a href="http://www.flaticon.com/" target="_blank"><?= $this->transEsc('Icons flaticon')?></a>.</p>
+
+</div>

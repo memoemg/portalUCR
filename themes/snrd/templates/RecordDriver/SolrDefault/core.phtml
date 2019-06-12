@@ -1,0 +1,79 @@
+<?
+
+$data = $this->driver->getRawData();
+
+$title = htmlentities($data['dc.title.none.fl_str_mv'][0]);
+$summAuthors = $data['dc.creator.none.fl_str_mv'];
+$summDate = $this->driver->getPublicationDates();
+$description = $data['dc.description.none.fl_txt_mv'];
+$subject = $data['dc.subject.none.fl_str_mv'];
+$publisher = $data['publisher'];
+$repo = $data['reponame_str'];
+$inst = $data['instname_str'];
+$lang = $data['language'][0];
+$type = $data['format'];
+$rights = $data['dc.rights.none.fl_str_mv'];
+$source = $data['dc.source.none.fl_str_mv'];
+
+$length = strlen($title);
+$tithead = $length > 100 ? substr($title,0,100).'...' : $title;
+
+$this->layout()->breadcrumbs = '<li><a href="'.$this->url('home').'">' .  $this->translate('Home') . '</a></li>';
+$this->layout()->breadcrumbs .= '<li class="active">' . $tithead . '</li>';
+
+/** Eliminamos del source los metadatos prefijados **/
+$fuentes = '';
+
+foreach ($source as $s){
+  if(!preg_match('/reponame|instname|instacron/', $s))
+      $fuentes .= "$s<br>";
+}
+
+?>
+
+<div class="media-body">
+  <div class="row">
+    <div class="col-sm-12 titleContainer">
+      <h1 class="title"><?= $this->record($this->driver)->getTitleHtml() ?></h1>
+    </div>
+  </div>
+
+  <dl class="dl-horizontal">
+    <dt><?= $this->transEsc('Authors') ?></dt><dd><?
+      $authorCount = count($summAuthors);
+      foreach ($summAuthors as $i => $summAuthor):
+        ?>
+        <a href="<?= $this->record($this->driver)->getLink('author', $this->highlight($summAuthor, null, true, false)) ?>"><?= $this->escapeHTML($summAuthor) ?></a><?= $i + 1 < $authorCount ? '; ' : '' ?>
+      <? endforeach; ?></dd>
+      <? if($publisher):?><dt><?= $this->transEsc('Publisher') ?></dt><dd><?= $this->escapeHtml($publisher[0]) ?></dd><? endif; ?>
+    <dt><?= $this->transEsc('Publication Year') ?></dt><dd><?= $this->escapeHtml($summDate[0]) ?></dd>
+    <dt><?= $this->transEsc('Language') ?></dt><dd><?= $this->escapeHtml($this->transEsc($lang)) ?></dd>
+    <dt><?= $this->transEsc('Format') ?></dt><dd><?= $this->transEsc($type[0]); ?></dd>
+    <dt><?= $this->transEsc('Status') ?></dt><dd><?= $this->transEsc($data['status_str']) ?></dd>
+    <? if(strpos($type[0],'Thesis') !== false ): ?>
+      <dt><?= $this->transEsc('Thesis supervisor') ?></dt><dd><? foreach($data['dc.contributor.none.fl_str_mv'] as $c): ?><?= $c ?><br><?endforeach; ?></dd>
+    <? endif ?>
+    <dt><?= $this->transEsc('Description') ?></dt><dd class="text-justify"><? foreach ($description as $a): ?><?=$a; ?><br><? endforeach; ?></dd>
+    <? if($fuentes):?><dt><?= $this->transEsc('Source') ?></dt><dd><?= $fuentes ?></dd><? endif; ?>
+    <? if($subject):?><dt><?= $this->transEsc('Subject') ?></dt><dd>
+    <?
+      $subjectCount = count($subject);
+      foreach ($subject as $i => $subj):
+        ?>
+        <!-- <a class="subject" href="<?= $this->record($this->driver)->getLink('subject', $this->highlight($subj, null, true, false)) ?>"><?= $this->highlight($subj) ?></a><?= $i + 1 < $subjectCount ? '<br>' : '' ?>-->
+        <?= $this->highlight($subj) ?><?= $i + 1 < $subjectCount ? '<br>' : '' ?>
+      <? endforeach; ?>
+    </dd>
+    <? endif; ?>
+    <dt><?= $this->transEsc('Access level') ?></dt><dd><?= $this->transEsc($data['eu_rights_str_mv'][0]) ?></dd>
+    <dt><?= $this->transEsc('License') ?></dt><dd><?= $this->transEsc($data['rights_invalid_str_mv']) ?></dd>
+    <dt><?= $this->transEsc('Repository') ?></dt><dd class="text-center"><img class="img-responsive" src="<?= $this->imageLink('repobanners/'.$repo.'.jpg') ?>" alt="<?= $repo ?>" /></dd>
+    <dt><?= $this->transEsc('Institution') ?></dt><dd><?= $inst ?></dd>
+  </dl>
+  <?= $this->driver->getLastIndexed() ?>
+  <div class="row">
+    <div class="col-xs-12 text-center">
+      <a href="<?= $data['url'][0] ?>" target="_blank" class="btn btn-primary btn-lg">Descargar</a>
+    </div>
+  </div>
+</div>

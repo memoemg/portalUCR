@@ -1,0 +1,686 @@
+@font-face {
+	font-family: "Geogrotesque";
+	font-weight: 400;
+	src: url('fonts/Geogrotesque/Geo-Rg.otf');
+}
+
+@font-face {
+	font-family: "Geogrotesque";
+	font-weight: 400;
+	font-style: italic;
+	src: url('fonts/Geogrotesque/Geo-RgIt.otf');
+}
+
+@font-face {
+	font-family: "Geogrotesque";
+	font-weight: 500;
+	src: url('fonts/Geogrotesque/Geo-Md.otf');
+}
+
+@font-face {
+	font-family: "Geogrotesque";
+	font-weight: 500;
+	font-style: italic;
+	src: url('fonts/Geogrotesque/Geo-MdIt.otf');
+}
+
+@font-face {
+	font-family: "Geogrotesque";
+	font-weight: 600;
+	src: url('fonts/Geogrotesque/Geo-Sb.otf');
+}
+
+@font-face {
+	font-family: "Geogrotesque";
+	font-weight: 600;
+	font-style: italic;
+	src: url('fonts/Geogrotesque/Geo-SbIt.otf');
+}
+
+@font-face {
+	font-family: "Lato";
+	src: url("fonts/Lato/Lato-Regular.ttf");
+}
+
+a:active, .azul {
+	color: #0076B7;
+}
+
+a:hover, .celeste {
+	color: #00b3de;
+	text-decoration: none;
+}
+
+body {
+	font-family: "Geogrotesque";
+	font-size: 15px;
+}
+
+mark {
+	color: #FCB415;
+	background-color: #fff;
+	border-radius: 5%;
+	padding: 0 5px;
+}
+
+.btn-primary {
+	background-color: #0076B7;
+}
+
+.btn-primary:hover, .btn-default:hover {
+	background-color: #0A91CC;
+	color: #ddd;
+}
+
+.form-control:focus {
+	border-color: #FCB415;
+}
+
+img.logo {
+	margin: 1em;
+}
+
+
+/**** Header ****/
+
+.logos {
+	padding: 1em;
+}
+
+.logos img#logo-snrd {
+	height: 6em;
+	margin-top: 1em;
+}
+
+.logos img#logo-mincyt {
+	height: 90px;
+	margin-top: 3em;
+}
+
+.navbar-snrd {
+	margin: 0;
+}
+
+.navbar-brand {
+	font-weight: 500;
+	color: #0076B7;
+}
+
+.search.navbar {
+	margin: 0;
+}
+
+.banner-logo {
+	padding: 10px;
+	height: 120px;
+}
+
+.banner-portalde {
+	color: #00b3de;
+	font-weight: 400;
+	margin: 0;
+	padding: .5em 0 0.25em;
+	border-bottom: 2px solid #FCB415;
+	font-size: 2em;
+}
+
+.banner-repos {
+	font-size: 2.5em;
+	color: #008bc0;
+	font-weight: 600;
+	margin: 0;
+	padding-top: 2px;
+}
+
+.header-snrd {
+	font-weight: 600;
+	font-size: 44px;
+}
+
+.subheader-snrd small {
+	color: #FAFAFA;
+	font-size: 22px;
+}
+
+.breadcrumb {
+	/*background-color: #FFF5CC;*/
+	color: #fff;
+	margin: 2em 0;
+}
+
+
+/**** Main ****/
+
+.stats-home {
+	width: 100%;
+	color: #FAFAFA;
+	margin-bottom: 2em;
+}
+
+.stats-home tr:first-child {
+	font-size: 38px;
+	font-family: Lato;
+}
+
+.stats-home tr:last-child {
+	font-size: 24px;
+	font-weight: 300;
+}
+
+.stats-home tr:first-child td {
+	padding-top: .25em;
+}
+
+.stats-home tr:last-child td {
+	padding-bottom: .25em;
+}
+
+.stats-home td {
+	text-align: center;
+}
+
+.stats-home td:nth-child(1) {
+	background-color: #E05900;
+}
+
+.stats-home td:nth-child(2) {
+	background-color: #FF8300;
+}
+
+.stats-home td:nth-child(3) {
+	background-color: #FFB718;
+}
+
+.jumbotron.franja-presentacion {
+	color: #FFF;
+	padding: 2em 0 3em 0;
+	margin-bottom: 3em;
+	background: rgba(255, 131, 0, 1);
+	background: -moz-linear-gradient(top, rgba(255, 131, 0, 1) 0%, rgba(252, 180, 21, 1) 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255, 131, 0, 1)), color-stop(100%, rgba(252, 180, 21, 1)));
+	background: -webkit-linear-gradient(top, rgba(255, 131, 0, 1) 0%, rgba(252, 180, 21, 1) 100%);
+	background: -o-linear-gradient(top, rgba(255, 131, 0, 1) 0%, rgba(252, 180, 21, 1) 100%);
+	background: -ms-linear-gradient(top, rgba(255, 131, 0, 1) 0%, rgba(252, 180, 21, 1) 100%);
+	background: linear-gradient(to bottom, rgba(255, 131, 0, 1) 0%, rgba(252, 180, 21, 1) 100%);
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ff8300', endColorstr='#fcb415', GradientType=0);
+}
+
+.searchHomeContent {
+	-webkit-box-shadow: 5px 5px 1px 0px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 5px 5px 1px 0px rgba(0, 0, 0, 0.25);
+	box-shadow: 5px 5px 1px 0px rgba(0, 0, 0, 0.25);
+	background-color: #FAFAFA;
+	padding: 1em;
+	border-radius: 10px;
+	color: #333;
+}
+
+.searchHomeContent h2 {
+	margin: .5em 0 1em .5em;
+}
+
+.jumbotron h1 {
+	font-size: 44px;
+}
+
+.jumbotron h1 .fa {
+	color: rgba(0, 0, 0, 0.8);
+	font-size: .5em;
+	vertical-align: middle;
+	margin-bottom: .5em;
+}
+
+.main-info h2, .solr-facets legend, .solr legend, .range legend {
+	border-bottom: 1px solid #FCB415;
+	color: #00b3de;
+}
+
+.main-info h1, label.adv-group-label, label.search_bool, .solr-adv-facet label, .range label, .solr label, .pageheader {
+	margin-top: 0;
+	color: #008bc0;
+	font-weight: 600;
+}
+
+.miembrosde img {
+	height: 57px;
+}
+
+#carousel{
+	max-height: 25em;
+}
+
+
+
+#carousel .carousel-indicators li{
+background-color: #FCB415;
+    height: 1em;
+    width: 1em;
+	    bottom: -4em;
+}
+
+#carousel .carousel-indicators li.active{
+	border-color: #00b3de;
+	background-color: #FAFAFA;
+	margin-bottom:1px;
+}
+
+#carousel .carousel-indicators li:hover{
+	background-color: #008bc0;
+	border-color: #FCB415;
+}
+
+#carousel .carousel-inner .carousel-caption{
+	background-color: rgba(0,0,0,.65);
+	padding: .25em;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	left: 15%;
+	right: 15%;
+}
+
+#carousel .carousel-inner .carousel-caption h4{
+	margin-top: 0.25em;
+}
+
+#carousel .carousel-inner .carousel-caption h4 a{
+	color: #FAFAFA;
+}
+
+#carousel .carousel-inner .carousel-caption h4 a:hover{
+	color: #FCB415;
+}
+
+#carousel .carousel-control{
+	padding-top: 15%;
+}
+
+@media screen and (max-width: 768px){
+	#carousel{
+		margin-bottom: 5em;
+	}
+	
+	.carousel-caption {
+		left: 5%;
+		right: 5%;
+	}
+}
+
+.twitter-container {
+	max-height: 25em;
+	overflow: scroll;
+}
+
+/**** Footer ****/
+
+footer {
+	background-color: #0A91CC;
+	color: #FFF;
+	width: 100% !important;
+	padding: 0;
+	margin-top: 1em;
+}
+
+footer .azul1 {
+	background-color: #0A91CC;
+	height: 140px;
+	padding: 1em;
+}
+
+footer .azul2 {
+	background-color: #0076B7;
+	height: 140px;
+	padding: 2em 1em;
+}
+
+footer .logo-mincyt {
+	padding: 0 !important;
+}
+
+footer .redes-sociales {
+	padding-top: 3.5em;
+}
+
+footer .mailrepo a {
+	color: #FFF;
+}
+
+footer .socialMediaLink {
+	color: #FAFAFA;
+}
+
+footer .socialMediaLink:hover {
+	color: #00b3de;
+}
+
+
+/*** Results ***/
+
+.repobanner {
+	border: 5px solid #FAFAFA;
+	margin-bottom: 5em;
+}
+
+.result {
+	position: relative;
+	padding: 0;
+	margin: 3em 0 5em 0;
+	/*-webkit-box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, .1);
+	box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, .1);*/
+	background-color: rgba(250, 250, 250, .5);
+	-webkit-border-top-right-radius: 10px;
+	-webkit-border-bottom-right-radius: 10px;
+	-moz-border-radius-topright: 10px;
+	-moz-border-radius-bottomright: 10px;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border-top: 1px solid #0A91CC;
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+}
+
+.result .record-number {
+	background-color: #0A91CC;
+	color: #FFF;
+	margin-right: 1em;
+	padding: 1em 0.5em;
+}
+
+.result .result-body {
+	width: 100%;
+	padding-bottom: 0;
+	padding-right: 1em;
+}
+
+.result .titleContainer {
+	margin: 1em 0;
+}
+
+.result .title {
+	font-weight: 300;
+	font-size: 1.5em;
+}
+
+.result .abstract {
+	padding: 0 2em 0 1em;
+}
+
+.result .repo {
+	margin-top: 1em;
+}
+
+.result .repo > .reponame {
+	background-color: #f5f5f5;
+	margin: 0;
+	padding: .4em 1em .6em .4em;
+	/*margin-left: 33px;*/
+	-webkit-border-bottom-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	text-align: right;
+}
+
+
+/*.result .repo > .triangle {
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 0 0 33px 33px;
+	border-color: transparent transparent #f5f5f5 transparent;
+	margin: 0 10px 0 0;
+	float: left;
+}*/
+
+.result .doctype {
+	position: absolute;
+	top: -35px;
+	color: #0A91CC;
+	padding: .05em .25em;
+	font-weight: 300;
+	font-variant: small-caps;
+	font-size: 1.3em;
+}
+
+
+/*** Facetas ***/
+
+.sidebar.right.hidden-print > h4 {
+	text-align: center;
+	color: #FC8615;
+}
+
+.facet-group {
+	background-color: rgba(250, 250, 250, .3);
+}
+
+.facet-group .title {
+	background-color: #FC8615;
+	color: #fff;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, .5);
+	font-size: 1.25em;
+	font-weight: 300;
+	-webkit-border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+	-moz-border-radius-topleft: 10px;
+	-moz-border-radius-topright: 10px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	background-repeat: no-repeat;
+	background-position: 11.75em .5em;
+	height: 3em;
+	padding-top: 1em;
+}
+
+.facet-group .title:after {
+	display: none;
+}
+
+.active-filters .facet, .facet-group .active {
+	background-color: #0076B7;
+}
+
+.badge, .facet-group .facet .badge, .facet-group .title .badge {
+	font-family: "Calibri";
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, .5);
+	background-color: #FFC647;
+}
+
+
+/** Avanzada **/
+
+.searchbox-advanced {
+	background-color: #FAFAFA;
+	border: 1px solid #FFC647;
+	border-radius: 10px;
+	padding: 1em;
+}
+
+.solr-adv-facet {
+	margin: 0 .25em;
+}
+
+.adv-submit {
+	margin-bottom: 2em;
+}
+
+
+/*** Repositorios ***/
+
+.repoCard {
+	border-radius: 20px;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border: 1px solid #f5f5f5;
+	overflow: hidden;
+	background-color: #f5f5f5;
+	text-align: center;
+	box-shadow: 0px 17px 46px -10px #777777;
+	margin: 2em 0;
+	opacity: 0.8;
+	-webkit-transition: all .2s;
+	transition: all .2s;
+	position: relative;
+	/*max-width: 832px;*/
+}
+
+.repoCard img {
+	overflow: hidden;
+	position: relative;
+	top: 0;
+	-webkit-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+}
+
+.repoCard:hover {
+	opacity: 1;
+}
+
+.repoCard:hover img {
+	top: -2px;
+	transform: scale(1.1);
+}
+
+.repoCard .main-body {
+	padding: 2em 2em 0em;
+	border-top: 1px solid #ccc;
+}
+
+@media (min-width: 768px) {
+	.repoCard .repoNameContainer {
+		height: 70px;
+		display: inline-block;
+	}
+}
+
+.repoCard h1.repoName {
+	text-transform: uppercase;
+	font-weight: 300;
+	color: #00b3de;
+	border-bottom: 1px solid #FCB415;
+	letter-spacing: 1px;
+	font-size: 30px;
+}
+
+.repoCard h1.records {
+	font-weight: 600;
+	margin: .2em 1em 0.5em;
+	font-size: 44px;
+	font-family: Lato, sans-serif;
+	letter-spacing: 1px;
+	/*text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.42);*/
+}
+
+.repoCard h1.records small {
+	display: inherit;
+	font-size: 14px;
+	font-weight: 300;
+	font-family: Calibri;
+	text-transform: uppercase;
+}
+
+.repoCard .institution {
+	height: 40px;
+}
+
+.repoCard .footer {
+	background-color: white;
+	border-top: 1px solid orange;
+	padding: 1em;
+}
+
+.repoCard .footer a {
+	margin-bottom: .25em;
+}
+
+
+/** Registro individual **/
+
+.media-body h1.title {
+	color: #008bc0;
+	font-weight: 600;
+	margin: 1em 0;
+}
+
+
+/** Estadísticas **/
+
+.icon-header {
+	opacity: .5;
+	height: 48px;
+	float: left;
+	margin-right: 1em;
+	padding-bottom: 1em;
+}
+
+h2.statistics-header {
+	margin-left: 2em !important;
+}
+
+.chartdiv {
+	width: 100%;
+	height: 450px;
+	background-color: 1px solid #f5f5f5;
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	margin-top: 2em;
+	margin-bottom: 3em;
+}
+
+.chartdiv tspan {
+	font-family: "Geogrotesque";
+	font-size: 14px;
+}
+
+.chartdiv text {
+	font-family: Calibri;
+	font-size: 14px;
+}
+
+.amcharts-pie-slice {
+	transform: scale(1);
+	transform-origin: 50% 50%;
+	transition-duration: 0.3s;
+	transition: all .3s ease-out;
+	-webkit-transition: all .3s ease-out;
+	-moz-transition: all .3s ease-out;
+	-o-transition: all .3s ease-out;
+	cursor: pointer;
+	box-shadow: 0 0 30px 0 #000;
+}
+
+.amcharts-pie-slice:hover {
+	transform: scale(0.95);
+	opacity: 0.8;
+}
+
+a[href*='amcharts'] {
+	display: none !important;
+}
+
+
+/** Ajustes especiales para celulares */
+
+@media (max-width: 768px) {
+	.jumbotron.franja-presentacion {
+		text-align: center;
+	}
+	.stats-home td {
+		font-size: .75em;
+	}
+}
+
+
+.core th{
+	text-align: right;
+	width: 25%;
+}
+
+#share{
+	padding: 0 1em;
+	font-size: 12px;
+	width: 175px;
+    text-align: center;
+}
+
+.jssocials-share-link { border-radius: 50%; }

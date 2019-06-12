@@ -1,0 +1,79 @@
+<?
+
+$data = $this->driver->getRawData();
+
+$title = htmlentities($data['dc.title.none.fl_str_mv'][0]);
+$summAuthors = $data['dc.creator.none.fl_str_mv'];
+$summDate = $this->driver->getPublicationDates();
+$description = $data['dc.description.none.fl_txt_mv'];
+$subject = $data['dc.subject.none.fl_str_mv'];
+$publisher = $data['publisher'];
+$repo = $data['reponame_str'];
+$inst = $data['instname_str'];
+$lang = $data['language'][0];
+$type = $data['format'];
+$rights = $data['dc.rights.none.fl_str_mv'];
+$source = $data['dc.source.none.fl_str_mv'];
+
+$length = strlen($title);
+$tithead = $length > 100 ? substr($title,0,100).'...' : $title;
+
+$this->layout()->breadcrumbs = '<li><a href="'.$this->url('home').'">' .  $this->translate('Home') . '</a></li>';
+$this->layout()->breadcrumbs .= '<li class="active">' . $tithead . '</li>';
+
+/** Eliminamos del source los metadatos prefijados **/
+$fuentes = '';
+
+foreach ($source as $s){
+  if(!preg_match('/reponame|instname|instacron/', $s))
+      $fuentes .= "$s<br>";
+}
+
+?>
+
+<div class="media-body">
+  <div class="row">
+    <div class="col-sm-12 titleContainer">
+      <h1 class="title"><?= $this->record($this->driver)->getTitleHtml() ?></h1>
+    </div>
+  </div>
+
+  <table class="table table-striped core">
+    <tr><th><?= $this->transEsc('Authors') ?></th><td><?
+      $authorCount = count($summAuthors);
+      foreach ($summAuthors as $i => $summAuthor):
+        ?>
+        <a href="<?= $this->record($this->driver)->getLink('author', $this->highlight($summAuthor, null, true, false)) ?>"><?= $this->escapeHTML($summAuthor) ?></a><?= $i + 1 < $authorCount ? '; ' : '' ?>
+      <? endforeach; ?></td></tr>
+      <? if($publisher):?><tr><th><?= $this->transEsc('Publisher') ?></th><td><?= $this->escapeHtml($publisher[0]) ?></td></tr><? endif; ?>
+    <tr><th><?= $this->transEsc('Publication Year') ?></th><td><?= $this->escapeHtml($summDate[0]) ?></td></tr>
+    <tr><th><?= $this->transEsc('Language') ?></th><td><?= $this->escapeHtml($this->transEsc($lang)) ?></td></tr>
+    <tr><th><?= $this->transEsc('Format') ?></th><td><?= $this->transEsc($type[0]); ?></td></tr>
+    <tr><th><?= $this->transEsc('Status') ?></th><td><?= $this->transEsc($data['status_str']) ?></td></tr>
+    <? if(strpos($type[0],'Thesis') !== false ): ?>
+      <tr><th><?= $this->transEsc('Thesis supervisor') ?></th><td><? foreach($data['dc.contributor.none.fl_str_mv'] as $c): ?><?= $c ?><br><?endforeach; ?></td></tr>
+    <? endif ?>
+    <tr><th><?= $this->transEsc('Description') ?></th><td class="text-justify"><? foreach ($description as $a): ?><?=$a; ?><br><? endforeach; ?></td></tr>
+    <? if($fuentes):?><tr><th><?= $this->transEsc('Source') ?></th><td><?= $fuentes ?></td></tr><? endif; ?>
+    <? if($subject):?><tr><th><?= $this->transEsc('Subject') ?></th><td>
+    <?
+      $subjectCount = count($subject);
+      foreach ($subject as $i => $subj):
+        ?>
+        <!-- <a class="subject" href="<?= $this->record($this->driver)->getLink('subject', $this->highlight($subj, null, true, false)) ?>"><?= $this->highlight($subj) ?></a><?= $i + 1 < $subjectCount ? '<br>' : '' ?>-->
+        <?= $this->highlight($subj) ?><?= $i + 1 < $subjectCount ? '<br>' : '' ?>
+      <? endforeach; ?>
+    </td></tr>
+    <? endif; ?>
+    <tr><th><?= $this->transEsc('Access level') ?></th><td><?= $this->transEsc($data['eu_rights_str_mv'][0]) ?></td></tr>
+    <tr><th><?= $this->transEsc('License') ?></th><td><?= $this->transEsc($data['rights_invalid_str_mv']) ?></td></tr>
+    <tr><th><?= $this->transEsc('Repository') ?></th><td class="text-center"><img class="img-responsive" src="<?= $this->imageLink('repobanners/'.$repo.'.jpg') ?>" alt="<?= $repo ?>" /></td></tr>
+    <tr><th><?= $this->transEsc('Institution') ?></th><td><?= $inst ?></td></tr>
+  </table>
+  <?= $this->driver->getLastIndexed() ?>
+  <div class="row">
+    <div class="col-xs-12 text-center">
+      <a href="<?= $data['url'][0] ?>" target="_blank" class="btn btn-primary btn-lg">Descargar</a>
+    </div>
+  </div>
+</div>

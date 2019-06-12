@@ -1,0 +1,52 @@
+<script>
+
+$.ajax({
+        type: 'GET',
+        //url: '/vufind/api/v1/search?type=AllFields&facet[]=reponame_str&sort=reponame_str&page=1&limit=0&prettyPrint=false&lng=es',
+        url: 'http://biblio-int.mincyt.gob.ar/api/repos',
+        beforeSend: function(){
+            $('#repos').html('<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span >Cargando listado...</span>');
+        },
+        success: function(data){
+
+           $.each(data, function(index, value){
+                $('#repos').append('<div class="col-xs-12 well"><div class="repoCard" id="'+value.id+'"><img src="/vufind/themes/snrd/images/repobanners/'+value.nombre_clave+'.jpg" class="img-responsive" /><div class="main-body"><div class="repoNameContainer"><h2 class="repoName text-arandano" style="margin: 1.5rem 0;">'+value.name+'</h2></div><!-- <p class="small text-justify">'+value.description+'</p>--></div><div class="footer">&nbsp;</div></div></div>');
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/vufind/api/v1/search?type=AllFields&filter[]=reponame_str%3A%22'+value.nombre_clave+'%22&facet[]=reponame_str&limit=0&lng=<?=$this->layout()->userLang?>',
+                    success: function (data){
+                        $('#'+value.id+' .repoNameContainer').after('<h5 style="margin: 1rem 0;" class="institution">'+value.under+'</h5><p class="text-gray"><b>'+addSeparator(data.resultCount)+'</b> <?= $this->transEsc('harvested records')?></p>');
+                        $('#'+value.id+' .footer').html('<div class="row"><div class="col-sm-6 text-center"><i class="fa fa-search fa-fw"></i> <a class="browseRepo" href="/vufind/Search/Results?filter%5B%5D=~reponame_str%3A%22'+value.nombre_clave+'%22"><?= $this->transEsc('Browse') .' '. $this->transEsc('repository') ?></a></div><div class="col-sm-6 text-center"><i class="fa fa-home fa-fw"></i><a class="visitRepo" href="http://'+value.url_repo+'" target="_blank"><?= $this->transEsc('Visit web') ?> </a></div></div>');
+                    }
+                })
+
+            });
+        }
+    })
+    </script>
+
+<? $this->headTitle($this->translate('Repositories')); ?>
+<? $this->layout()->breadcrumbs = false; ?>
+
+<div class="container">
+  <section>
+    <article class="content_format row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1 class="activities-sidbar">Sistema Nacional de Repositorios Digitales</h1>
+        <hr>
+        <h2><?=$this->translate('Repositories') ?></h2>
+        <form class="form-inline text-right" id="repos-orden">
+          <label class="h4">Orden</label>&nbsp;<select class="form-control" id="orden" name="orden">
+            <option value="a">Repositorio [A-Z]</option>
+            <option value="z">Repositorio [Z-A]</option>
+            <option value="0">Cantidad de registros [0-9]</option>
+            <option value="9">Cantidad de registros [9-0]</option>
+          </select>
+        </form>
+          <div id="repos" class="row"></div>
+          <div class="clearfix"></div>
+      </div>
+    </article>
+  </section>
+</div>

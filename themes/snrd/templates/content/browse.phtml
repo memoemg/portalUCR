@@ -1,0 +1,51 @@
+<?
+    $this->headTitle($this->translate('Browse'));
+
+$criteriaList = array(
+    array('field'=>'author_facet', 'label'=>'Author'),
+    array('field'=>'language', 'label'=>'Language'),
+    array('field'=>'format', 'label'=>'Format'),
+    array('field'=>'eu_rights_str_mv', 'label'=>'Access level'),
+    array('field'=>'reponame_str', 'label'=>'Repository'),
+    array('field'=>'publishDate', 'label'=>'Publication Date'),
+    );
+
+    $criteria = $_GET['criteria'];
+
+    foreach($criteriaList as $array){
+        if(in_array($criteria,$array))
+            $label = $array['label'];
+    }
+
+    if($criteria){
+        $this->layout()->breadcrumbs = '<li class="active"><a href="<?=$this->url(\'home\')?>">' .  $this->translate('Home') . '</a></li><li class="active">' . $this->translate('home_browse') . ' <b>' . strtolower($this->transEsc($label)). '</b></li> ';
+    }
+?>
+<? if($criteria):?>
+    <script>
+        $.ajax({
+            type: 'GET',
+            url: '/vufind/api/v1/search?facet[]=<?= $criteria ?>&limit=0&lng=<?=$this->layout()->userLang?>',
+            success: function(data){
+                $.each(data.facets.<?= $criteria ?>, function(index, value){
+                    $('#secondList').append('<div class="col-xs-12 col-sm-6"><a class="list-group-item" href="/vufind/Search/Results?type=AllFields&filter%5B%5D=<?= $criteria ?>%3A%22'+value.value+'%22"><span class="badge">'+value.count+'</span>'+value.translated+'</a></div>');
+                });
+            }
+        });
+    </script>
+<? endif; ?>
+
+<div class="container main-info">
+    <h1 class="page-header"><?= isset($criteria) ? $this->translate('home_browse') . ' ' . strtolower($this->transEsc($label)) : $this->translate('Browse') ?></h1>
+    <h1><small><?= $this->translate('Select a criteria')?></small></h1>
+    <div class="row">
+      <div class="col-md-3" id="firstList">
+        <ul class="list-group">
+            <? foreach($criteriaList as $c):?>
+                <a class="list-group-item<?= $criteria == $c['field'] ? ' active' : '' ?>" href="?criteria=<?= $c['field'] ?>"><?= $this->transEsc($c['label']) ?><span class="pull-right"><i class="fa fa-chevron-right"></i></span></a>
+            <? endforeach; ?>
+          </ul>
+        </div>
+        <div class="col-md-9" id="secondList"></div>
+    </div>
+</div>

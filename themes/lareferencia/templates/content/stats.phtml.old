@@ -1,0 +1,119 @@
+<? $this->headTitle($this->translate('Statistics')); ?>
+<? $this->layout()->breadcrumbs = '<li class="active"><a href="http://www.lareferencia.info/">' .  $this->translate('Home') . '</a></li><li class="active">' . $this->translate('Statistics') . '</li> '; 
+
+/** Defino los criterios **/
+$criteriaList = array(
+    array('field'=>'network_name_str', 'label'=>'Country', 'container'=>'chartCountry', 'graphicType'=>'pie', 'limit'=>9, 'order' => 'n'),
+    array('field'=>'instname_str', 'label'=>'Institution', 'container'=>'chartInst', 'graphicType'=>'pie', 'limit'=>15, 'order' => 'n'),
+    array('field'=>'reponame_str', 'label'=>'Repository', 'container'=>'chartRepo', 'graphicType'=>'pie', 'limit'=>15, 'order' => 'n'),
+    array('field'=>'language', 'label'=>'Language', 'container'=>'chartLang', 'graphicType'=>'pie', 'limit'=>4,  'order' => 'n'),
+    array('field'=>'format', 'label'=>'Format', 'container'=>'chartFormat', 'graphicType'=>'pie', 'limit'=>9, 'order' => 'n'),
+    array('field'=>'eu_rights_str_mv', 'label'=>'Access level', 'container'=>'chartRights', 'graphicType'=>'pie', 'limit'=>9, 'order' => 'n'),
+    array('field'=>'publishDate', 'label'=>'Publication Year', 'container'=>'chartDates', 'graphicType'=>'serial', 'limit'=>100, 'order' => 'y')
+);
+
+?>
+<div class="container main-info">
+  <h1 class="page-header"><?=$this->translate('Statistics')?></h1>
+  <? foreach($criteriaList as $array):?>
+  <h2 class="h2 flaticon"><i class="flaticon-<?= $array['field'] ?>"></i> <?= $this->transEsc('Amount of publications by') ?> <?= strtolower($this->transEsc($array['label'])) ?></h2>
+  <div id="<?= $array['container']?>" class="chartdiv"></div>
+  <script>
+    var array_<?= $array['field'] ?> = [];
+
+    $.ajax({
+        type: 'GET',
+        url: '/vufind/api/v1/search?type=AllFields&facet[]=<?= $array['field'] ?>&page=0&limit=0&lng=<?=$this->layout()->userLang?>',
+        success: function(data){
+            var total = 0;
+            $.each(data.facets.<?= $array['field'] ?>, function(index, value){
+                if (index < <?= $array['limit'] ?> && value.translated != null){
+                    array_<?= $array['field'] ?>.push({'label': value.translated, 'publications': value.count});
+                } else {
+                    total = total + value.count;
+                }
+            });
+
+            <? if($array['graphicType'] == 'pie'):?>
+                array_<?= $array['field'] ?>.push({'label': 'otros', 'publications': total});
+            <? endif; ?>
+        
+            <? if($array['order'] == 'y'): ?>
+            array_<?= $array['field'] ?>.sort(function(a, b) {
+                return parseFloat(a.label) - parseFloat(b.label);
+            });
+            <? endif; ?>
+           
+        },
+        complete: function(){
+
+        <? if($array['graphicType'] == 'pie'):?>
+            var chart = AmCharts.makeChart("<?= $array['container'] ?>", {
+                "type": "pie",
+                "addClassNames": true,
+                "thousandsSeparator": ".",
+                "decimalSeparator": ",",
+                "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+                "allLabels": [],
+                "balloon": {"borderThickness": 1},
+                "dataProvider": array_<?= $array['field'] ?>,
+                "valueField": "publications",
+                "titleField": "label",
+                "export": {
+                    "enabled": true
+                },
+                "creditsPosition": "bottom-left",
+                //"colors":["#008AC0", "#0145C6", "#0A03CD", "#5B05D4", "#AE08DA", "#E10ABC", "#E80C6F", "#EE0F1F", "#F55812", "#FCB415"],
+            });
+        <? else: ?>
+            var chart = AmCharts.makeChart("<?= $array['container'] ?>", {
+                "type": "serial",
+                "thousandsSeparator": ".",
+                "decimalSeparator": ",",
+                "dataProvider": array_<?= $array['field'] ?>,
+                "categoryField": "label",
+                "categoryAxis": {
+                "gridPosition": "start",
+                "gridAlpha": 0,
+                "tickPosition": "start",
+                "tickLength": 20,
+                "title": "<?= $this->transEsc('Publication Year') ?>"
+            },
+            "valueAxes": [ {
+                "gridColor": "#ccc",
+                "gridAlpha": 0.5,
+                "dashLength": 0,
+                "title": "<?= $this->transEsc('publications') ?>"
+            } ],
+            "gridAboveGraphs": true,
+            "startDuration": 1,
+            "graphs": [ {
+                "balloonText": "[[category]]: <b>[[value]]</b>",
+                "fillAlphas": 1,
+                "lineAlpha": 1,
+                "type": "column",
+                "valueField": "publications"
+            } ],
+            "chartCursor": {
+                "categoryBalloonEnabled": false,
+                "cursorAlpha": 0,
+                "zoomable": false
+            },
+                "export": {
+                    "enabled": true
+                },
+                "creditsPosition": "bottom-left",
+            });
+        <? endif; ?>
+        }
+    });
+    </script>
+  <? endforeach; ?>
+</div>
+
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/pie.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+<script src="https://www.amcharts.com/lib/3/themes/none.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>

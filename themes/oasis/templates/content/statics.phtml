@@ -1,0 +1,328 @@
+<style type="text/css">
+	#chartDate {
+	  width: 100%;
+	  height: 100%;
+
+	}
+</style>
+<div class="row about">  
+  <div class="col-sm-12"></div>
+</div>
+
+<div id="tabs">
+	<ul>
+		<li><a href="#row-1"> <?=$this->transEsc('Dashboard')?> </a> </li>
+		<li><a href="#row-2"><?=$this->transEsc('Custom Dashboard')?></a></li>
+		<!--li><a href="#row-3">Aenean lacinia</a></li-->
+	</ul>
+	<div id='row-1' class="row">
+		<div id='box'></div>		
+	</div> 
+	<div id='row-2' class="row">	
+		<div class="searchable"> 
+		  <select id="comboInst" multiple='multiple'>        
+		  </select>
+		</div>
+		<div id="loading" style="margin-bottom: .5em;text-align: center; display:none;">
+			<img src="http://i.stack.imgur.com/Z4BUx.gif" alt="Carregando..." title="Carregando..." style="width: 3%">
+		</div>
+		<div id="charts"></div>
+	</div> 
+	<!--div id='row-3' class="row">TESTE 3</div-->
+</div>
+
+
+<script>
+var tooltip = d3.select("body").append("div").attr("class", "toolTip");
+var countType;
+
+$( function() {
+    $( "#tabs" ).tabs();
+} );
+
+montaCombo();
+ajax();
+docsDate()
+docsType();
+docsInst();
+docsLang();
+
+/*var vars = initVar.call(null, {id: '#row-1', titleDiv: "Quantidade de Documentos por Ano", class: 'col-sm-6 borderDiv'})
+var g = vars.svg.append("g").attr("transform", "translate(" + vars.margins.margin.left + "," + vars.margins.margin.top + ")"),
+	y = d3.scaleLinear().rangeRound([vars.margins.height,0]),
+    x = d3.scaleBand().range([0, vars.margins.width]).padding(0.1);
+
+var div = createDiv.call(null, {id: '#row-1', titleDiv: 'params.titleDiv', class: 'col-sm-6 borderDiv' })
+var svg = createSvg.call(div, {width: '500', height: '400'})
+
+*/
+
+
+/******************************************************************************************************************************
+*******************************************************************************************************************************/
+
+function docsLang(){
+	var vars = initVar.call(null, {id: '#row-1', titleDiv: "<?=$this->transEsc('Documents by Language')?>", class: 'col-sm-6 borderDiv', width: '400', height:'250'})
+
+	var g = vars.g, //svg.append("g").attr("transform", "translate(" + vars.margins.margin.left + "," + vars.margins.margin.top + ")"), 
+		y = d3.scaleLinear().rangeRound([vars.margins.height,0]),
+	    x = d3.scaleBand().range([0, vars.margins.width]).padding(0.1);
+
+	url = "/vufind/api/v1/search?type=AllFields&facet[]=language&page=1&limit=0" //SEARCH DOCs BY language
+	d3.json(url, function(error, data) {
+      	if (error) throw error;
+
+		//TOTAL DE INSTITUIÇÕES PARTICIPANTES
+		var div = d3.select('#box')
+					.append('div')
+					.style('margin-right','10px');
+      	
+      	//MONTAR BOX/DIV COM INFORMAÇÕES NUMÉRICAS
+      	boxNumber.call(div, {docs: data, title: "<?=$this->transEsc('Total of Documents')?>"})
+    	  
+		//console.log(data)
+      	var facet   = Object.keys(data.facets);
+		
+		
+		var dados = data.facets[facet].map(function(line){
+			var type = line.value.toLowerCase();
+			var ret = {}
+
+			if( ! ['por','eng','spa'].includes(type) ){
+				ret.value = 'Outros';// = 'Repo. Institucionais'
+				ret.count = line.count
+			}else{
+				ret.value = type
+				ret.count = line.count
+			}
+			return ret;
+		});
+
+		var groupBy = d3.nest()
+					.key(function(x){ return x.value})
+					.rollup(function(v){ 
+						return d3.sum(v, function(d) { return d.count; } ) 
+					})
+					.entries(dados)
+
+		//.rollup(function(v) { return v.length; }).entries(dados);
+		groupBy = JSON.parse(JSON.stringify(groupBy).split('"value":').join('"count":'));//ALTERAR NOME DOS ATRIBUTOS DO JSON
+		groupBy = JSON.parse(JSON.stringify(groupBy).split('"key":').join('"value":')); //ALTERAR NOME DOS ATRIBUTOS DO JSON
+
+		pieChar.call(g, {data: groupBy, margins: vars})
+    });
+	//readApiFacet2.call(g, {url: url, axis: {x : x, y : y}, margins: vars, horizontal: false , setFill: true})
+}
+function docsDate(){
+	var vars = initVar.call(null, {id: '#row-1', titleDiv: "<?=$this->transEsc('Documents by Year')?>", idSvg: 'chartDate',class: 'col-sm-12 borderDiv', width: '1000', height:'250'})
+	var g = vars.g, //svg.append("g").attr("transform", "translate(" + vars.margins.margin.left + "," + vars.margins.margin.top + ")"), 
+		y = d3.scaleLinear().rangeRound([vars.margins.height,0]),
+	    x = d3.scaleBand().range([0, vars.margins.width]).padding(0.1);
+
+	url = "/vufind/api/v1/search?type=AllFields&facet[]=publishDate&sort=relevance&page=1&limit=0" //SEARCH DOCs BY DATE
+	readApiFacet2.call(g, {url: url, axis: {x : x, y : y}, margins: vars, horizontal: false , setFill: false})
+}
+	
+function docsType(){
+	var vars = initVar.call(null, {id: '#row-1', titleDiv: "<?=$this->transEsc('Documents by Type')?>", class: 'col-sm-6 borderDiv', width: '400', height:'250'})
+	var g = vars.g, //vars.svg.append("g").attr("transform", "translate(" + vars.margins.margin.left + "," + vars.margins.margin.top + ")"), 
+		y = d3.scaleLinear().rangeRound([vars.margins.height,0]),
+	    x = d3.scaleBand().range([0, vars.margins.width]).padding(0.1);
+			
+	var url = "/vufind/api/v1/search?type=AllFields&facet[]=format&sort=relevance&page=1&limit=0" //SEARCH DOC BY TYPE
+	readApiFacet2.call(g, {url: url, axis: {x : x, y : y}, margins: vars, horizontal: false , setFill: true})
+
+}
+
+function docsInst(){
+	var vars = initVar.call(null, {id: '#row-1', titleDiv: "<?=$this->transEsc('Institutions with more Documents (Top 10)')?>", class: 'col-sm-6 borderDiv', width: '400', height:'250'})
+	var g = vars.g, 
+		x = d3.scaleLinear().rangeRound([0,vars.margins.width]),
+	    y = d3.scaleBand().range([vars.margins.height, 0]).padding(0.1);
+
+	url = "/vufind/api/v1/search?type=AllFields&facet[]=institution&sort=relevance&page=1&limit=0&prettyPrint=true"
+	readApiFacet2.call(g, {url: url, axis: {x : x, y : y}, margins: vars, horizontal: true , setFill: true})
+}
+
+
+
+
+
+/******************************************************************************************************************************
+*******************************************************************************************************************************/
+/******************************************************************************************************************************
+*******************************************************************************************************************************/
+
+// FUNÇÃO PARA MONTAR GRÁFICO DE REPOSITÓRIO DO OASIS
+function ajax(){
+	$.ajax({
+		type: 'Get',
+		url: 'http://oai.agregador.ibict.br/backend/public/listNetworks',
+		success: function(data){
+			$.ajax( {
+					dataType: 'json',
+					type:'Get',
+					url:'/vufind/api/v1/search?facet[]=network_acronym_str&sort=relevance&limit=0',
+					success:function(dataApi) {
+					var acrony      = []
+					var countAcrony = []
+					var newData     = []
+
+					$.map(dataApi.facets['network_acronym_str'], function(x){
+					  acrony.push(x.value)
+					  countAcrony.push(x.count)          
+					})
+
+					$.each(data,function(index, value){
+					  if(acrony.includes(value.acronym) ) {            
+					    value.validSize = countAcrony[acrony.indexOf(value.acronym)];
+					    newData.push(value);
+					  }          
+					})
+
+					//TOTAL DE INSTITUIÇÕES PARTICIPANTES
+					var div = d3.select('#box')
+								.append('div')
+								.style('margin-right','10px');
+
+					boxNumber.call(div, { inst: data,title: "<?=$this->transEsc('Instituitions Partner')?>" })
+
+
+					var dados = newData.map(function(value){
+						var type = value.type.toLowerCase();
+
+						if(type == 'repositório institucional'){
+							type = 'Repo. Institucionais'
+						}else if(type == "biblioteca digital de teses e dissertações" || type == "biblioteca de teses e dissertações"){
+							type = 'Bdtd'
+						}else if(type == "revista"){
+							type = 'Revista'
+						}else{
+							type = 'Outros'
+						}
+						return {data: type}
+					});
+
+					// VARIAVEL PARA ARMAZENAR O RETORNO DO GROUPBY 
+					countType = group(dados, ['data'])		
+
+					countType.sort(function(x, y){        
+						return y.count - x.count;
+					})
+								
+					// y.domain(countType.map(function(d) { return d.value; })); x.domain([0, d3.max(countType, function(d) { return d.count; })]);
+
+					//x.domain(countType.map(function(d) { return d.value; })); y.domain([0, d3.max(countType, function(d) { return d.count; })]);
+
+					var vars = initVar.call(null, {id: '#row-1', titleDiv: "<?=$this->transEsc('Documents by Type of Repository')?>", class: 'col-sm-6 borderDiv', width: '450', height: '250'})
+
+					var g = vars.g,
+						x = d3.scaleLinear().rangeRound([0,vars.margins.width]),
+					    y = d3.scaleBand().range([vars.margins.height, 0]).padding(0.1);
+
+					//barGraph2.call(g, {data: countType, axis: {x : x, y : y}, margins: vars,horizontal: true, setFill: true});
+
+					pieChar.call(g, {data: countType, margins: vars})
+				}	
+			});
+		}
+	});
+}
+
+/******************************************************************************************************************************
+*******************************************************************************************************************************/
+/******************************************************************************************************************************
+*******************************************************************************************************************************/
+/******************************************************************************************************************************
+*******************************************************************************************************************************/
+
+
+/*
+var dados = []
+var url1 = "/vufind/api/v1/search?lookfor=institution%3ABSID&type=AllFields&facet[]=institution&facet[]=language&facet[]=format&facet[]=publishDate&sort=relevance&page=3&limit=0"
+var url2 = "/vufind/api/v1/search?lookfor=institution%3AAlcar&type=AllFields&facet[]=institution&facet[]=language&facet[]=format&facet[]=publishDate&sort=relevance&page=3&limit=0"
+
+var conec = [url1,url2]
+var i = 0
+function gdados(url, i){
+  
+      $.ajax({
+          type: 'Get',
+        dataType: 'jsonp',      
+          url: url, //conec[i],
+          success: function(data){
+            console.log('data ', data)
+            //dados.push(data)
+            
+
+          },
+          error: function(error){
+            console.log('error = ', error)
+          },
+          complete: function(c){
+            console.log('gg')
+          }
+        }).done(function() { gdados(conec[i+1]); console.log('done ajax')}) 
+  
+}
+
+
+
+// chartDate
+
+// Define responsive behavior
+function resize() {
+	var margin = {top: 20, right: 20, bottom: 105, left: 60}
+  //console.log(d3.select("#chartDate").style("width"), d3.select("#chart").style("height"))
+  console.log(d3.select("#chartDate").style("width"))
+
+  var width = parseInt(d3.select("#chartDate").style("width")) - margin.left - margin.right,
+     height = parseInt(d3.select("#chartDate").style("height")) - margin.top - margin.bottom;
+
+  // Update the range of the scale with new width/height
+  //xScale.range([0, width]);
+  //yScale.rangeRoundBands([height, 0], 0.1);
+
+  var x = d3.scaleBand().range([0, width]).padding(0.1);
+  	  y = d3.scaleLinear().rangeRound([height,0]);
+
+  var svg = d3.select("#chartDate")
+
+  // Update the axis and text with the new scale
+  svg.select(".axis--x")
+    .call(d3.axisBottom(x))
+    .attr("transform", "translate(0," + height + ")")
+    .select(".label")
+      .attr("transform", "translate(" + width / 2 + "," + margin.bottom / 1.5 + ")");
+
+  svg.select(".axis--y")
+    .call(d3.axisLeft(y).ticks(10,"s"))//params.axis.
+
+  // Update the tick marks
+  //xAxis.ticks(Math.max(width/75, 2), " $");
+
+  // Force D3 to recalculate and update the line
+  svg.selectAll(".bar")
+    //.attr("width", function(d) { return xScale(d["total"]); })
+	.attr("width", x.bandwidth())
+    //.attr("y", function(d) { return yScale(d["Name"]); })
+	.attr("y", function(d) { return y(d.count); })
+    //.attr("height", yScale.rangeBand());
+	.attr("height", function(d) { return margin.height - y(d.count); })//params.margins.margins.margin.height
+
+};
+
+// Call the resize function whenever a resize event occurs
+d3.select(window).on('resize', resize);
+
+
+//gdados(conec[i], 0)
+//imp(dados)
+
+//multIns();
+
+
+*/
+
+
+</script>

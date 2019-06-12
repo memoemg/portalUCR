@@ -1,0 +1,272 @@
+#jumbotronResults {
+  min-height: 145px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+#jumbotronResults .jumbotron_body {
+  padding: 10px 0;
+}
+
+header #jumbotronResults .btn {
+  padding: 16px 25px;
+}
+
+.facet-group .facet .badge, .facet-group .title .badge {
+  max-height: 19px;
+  line-height: .75rem;
+}
+
+/* Facetas resultados */
+
+.facet-group {
+  font-size: 15px;
+}
+
+.sidebar .list-group {
+  background-color: rgba(255, 255, 255, .1);
+}
+
+.sidebar h4 {
+  font-size: 24px;
+  text-align: center;
+}
+
+div[id^="side-panel-"] .title {
+  background-color: #eee;
+  color: #ef4d3d;
+  text-transform: uppercase;
+}
+
+div[id^="side-panel-"] .badge {
+  background-color: #F9F9F9;
+  color: #ef4d3d;
+  font-size: 14px;
+}
+
+div#side-panel-eu_rights_str_mv {
+  text-transform: lowercase;
+}
+
+.slider-container .slider-handle {
+  background: #ef4d3d;
+  background-image: none;
+  border: 1px solid #ef4d3d;
+}
+
+.slider-container .slider-handle:hover, .slider-container .slider-handle:active, .slider-container .slider-handle:focus {
+  opacity: 1;
+  background: #767676;
+  border-color: #777;
+}
+
+/* Resultados resultados */
+
+.template-name-results .breadcrumbs ul {
+  margin: 1.5rem 0;
+  display: none;
+}
+
+.template-name-results .breadcrumbs ul li.active {
+  font-weight: 300;
+  font-size: 18px;
+}
+
+.template-name-results #content {
+  margin-top: 2rem;
+}
+
+mark {
+  background-color: inherit;
+  color: #ef4d3d;
+  font-weight: 600;
+}
+
+.search-controls .jumpMenu.form-control {
+  height: 35px;
+  ;
+}
+
+.result {
+  border-bottom: 2px solid #767676;
+  margin-bottom: 1rem;
+  -webkit-border-bottom-left-radius: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.result .media {
+  border-left: 2px solid #767676;
+  padding-left: 1rem;
+}
+
+.result .result-body {
+  width: 100%;
+}
+
+.result .media-body {
+  padding-bottom: 1rem;
+}
+
+.result .record-number {
+  font-size: 1.25rem;
+  color: #eee;
+  background-color: #767676;
+  padding-top: 1rem;
+  -webkit-border-bottom-left-radius: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.result .title {
+  font-size: 1.25rem;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+  line-height: 1.5rem;
+  display: block;
+  padding-top: 1rem;
+}
+
+.result .fulltext {
+  margin-top: 1rem;
+  display: block;
+}
+
+.doctype {
+  float: right;
+  margin-right: 1rem;
+  background-color: #ff4338;
+  color: #fff;
+  padding: .1rem .5rem;
+  border-radius: 1rem;
+}
+
+.author {
+  font-weight: 400;
+}
+
+.authors p, .publicationDate p, .language p, .showAbstract, .reponame, .abstract p, .subject p {
+  font-size: 15px;
+}
+
+.abstract {
+  background-color: #eee;
+  padding: .5rem 1.5rem;
+  margin-bottom: 1.25rem;
+  border-radius: 1rem;
+}
+
+.search-stats {
+  background-color: #eee;
+  margin-right: 2rem;
+  padding: 1rem;
+}
+
+.search-controls {
+  margin-top: 1rem;
+}
+
+.list-group-item, .result.embedded .getFull.expanded, .result.embedded .loading {
+  background-color: inherit;
+}
+
+ul.list-group li {
+  font-size: 14px;
+}
+
+/** Gráficos de estadísticas **/
+
+.chartdiv {
+  height: 500px;
+  border: 1px solid silver;
+  border-radius: 1rem;
+  margin-bottom: 5rem;
+  background-color: #fff;
+}
+
+tspan {
+  font-family: Roboto, san-serif;
+  font-size: 12px;
+}
+
+#repos-orden label {
+  margin-top: 0;
+}
+
+.searchtools {
+  padding-bottom: 2rem;
+  padding-top: 1rem;
+  text-align: center;
+}
+
+.pagination {
+  margin-bottom: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+@media (min-width:768px) {
+  .record-nav.nav {
+    float: left;
+    background-color: rgba(255, 255, 255, .5);
+    margin-top: 1.25rem;
+    width: 24%;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  }
+  .record-nav li {
+    float: none;
+    font-size: 14px;
+  }
+}
+
+/* Búsqueda avanzada */
+
+.solr-facet-container{
+  justify-content: space-around;
+  flex-flow: row wrap;
+}
+
+.solr-adv-facet label, .adv-group-match label, .adv-group-terms label {
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #ff4338;
+}
+
+.solr-adv-facet{
+  margin: .25rem .25rem .75rem;
+}
+
+legend {
+  text-transform: uppercase;
+  color: #ef4d3d;
+}
+
+@media (max-width:768px) {
+  .solr-facets, fieldset.range {
+    padding: 1rem;
+  }
+  .solr-adv-facet {
+    margin-bottom: 1rem;
+  }
+  .adv-submit {
+    margin-bottom: 1.25rem;
+  }
+}
+
+.template-name-advanced .sidebar h4 {
+  font-size: 22px;
+}
+
+.template-name-advanced #content {
+  display: block;
+  background-color: inherit;
+}
+
+.template-name-advanced .jumbotron {
+  min-height: 160px;
+  margin-bottom: 2rem;
+}
+
+.template-name-advanced .jumbotron_body {
+  padding-top: 1rem;
+  padding-bottom: .5rem;
+}
