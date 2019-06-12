@@ -1,0 +1,83 @@
+<? $this->headTitle($this->translate('Institutions')); ?>
+
+<script src="themes/bdtd/js/jquery.tabletoCSV.js"></script>
+
+<script>
+$.ajax( {
+  type:'Get',
+  url:'http://192.168.0.118:8090/backend/public/listNetworks',
+  success:function(data) {    
+    $.ajax( {
+      dataType: 'json',
+      type:'Get',
+      url:'/vufind/api/v1/search?facet[]=network_acronym_str&sort=relevance&limit=0',      
+      success:function(dataApi) {
+        var acrony      = []
+        var countAcrony = []
+        var newData     = []
+        
+        $.map(dataApi.facets['network_acronym_str'], function(x){
+          acrony.push(x.value)
+          countAcrony.push(x.count)
+          
+        })
+        $.each(data,function(index, value){
+          if(acrony.includes(value.acronym) ) {            
+            value.validSize = countAcrony[acrony.indexOf(value.acronym)];
+            newData.push(value);
+          }          
+        })
+        dataTable(newData);
+      }
+    });
+
+  }
+});
+
+function dataTable(data){  
+      $('#inst_table').DataTable( {
+        //"iDisplayLength": 50,
+        language:{
+          "lengthMenu": 'Display <select>'+
+                        '<option value="10">10</option>'+
+                        '<option value="50">50</option>'+
+                        '<option value="40">100</option>'+
+                        '<option value="-1">All</option>'+
+                        '</select> records'   
+        },
+        data: data,
+        columns: [
+            { title: "Nome", data: "name",
+            render: function(data, type, row){
+                      return  row["url"] == null || row["url"] == ''? data :'<a href="' + row["url"] + '" target = "_blank">' +  data + '</a>';
+                    }
+            },
+            { title: "Institução", data: "institution" },
+            { title: "Tipo", data: "type" },
+            //{ title: "URL", data: "url" },{ title: "Email", data: "email" },
+            { title: "Size", data: "validSize" },
+        ]
+    } );  
+
+}
+</script>
+
+
+<div class="col-sm-12">
+  <h2>Instituições participantes</h2>
+  <h4><span class="subTitText"> CONHEÇA AS INSTITUIÇÕES PARTICIPANTES DA BIBLIOTECA DIGITAL BRASILEIRA DE TESES E DISSERTAÇÕES (BDTD)</span></h4>
+  <p>
+    Aguarde o carregamento completo da tabela com as instituições participantes da BDTD.
+  </p>
+
+  <div style="margin-bottom: .5em;">
+    <button id="export" data-export="export" class="btn btn-warning"><?=$this->transEsc('Export to CSV')?></button>
+  </div>
+  <table id="inst_table" class="display"></table>
+</div>
+
+<script>
+  $("#export").click(function(){
+    $("#inst_table").tableToCSV();
+  });
+</script>

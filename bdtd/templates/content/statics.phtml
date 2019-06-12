@@ -1,0 +1,223 @@
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.quicksearch/2.3.1/jquery.quicksearch.js"></script>
+  <script src="  https://cdnjs.cloudflare.com/ajax/libs/multi-select/0.9.12/js/jquery.multi-select.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/multi-select/0.9.12/css/multi-select.min.css">
+  
+
+
+
+
+<style type="script/css">
+  .ui-state-active{
+    border: 1px solid #0a630a !important;
+    background: #0a630a !important;
+  }
+</style>
+
+
+<div class="row about">  
+  <div class="col-sm-12">
+    <h3 style="color:#0a630a">Sobre a BDTD</h3>
+      <p>O Ibict coordena o projeto da Biblioteca Digital Brasileira de Teses e Dissertações (BDTD), que integra os sistemas de informação de teses e dissertações existentes nas instituições de ensino e pesquisa brasileiras, e também estimula o registro e a publicação de teses e dissertações em meio eletrônico. Este projeto − iniciativa inovadora do IBICT, em parceria com as instituições brasileiras de ensino e pesquisa − possibilita que a comunidade brasileira de C&T publique suas teses e dissertações produzidas no país e no exterior, dando maior visibilidade a produção científica nacional.</p>
+  </div>
+</div>
+
+
+
+
+<!--select id='custom-headers' multiple='multiple' class="searchable">
+  <option value='elem_1' >UNB</option>
+  <option value='elem_2'>USP</option>
+  <option value='elem_3'>UFRJ</option>
+  <option value='elem_4' >UNICAMP</option>
+  ...
+  <option value='elem_100'>elem 100</option>
+</select-->
+
+<div id="tabs">
+  <ul>
+    <li><a href="#row-1">Gráficos Geral</a></li>
+    <!--li><a href="#row-2">Gráficos Customizados</a></li>
+    <li><a href="#row-3">Aenean lacinia</a></li-->
+  </ul>
+  <div id='row-1' class="row"></div> 
+  <!--div id='row-2' class="row">TESTE</div> 
+  <div id='row-3' class="row">TESTE 3</div-->
+</div>
+
+
+<script>
+function a(){
+$.ajax( {
+  type:'Get',
+  url:'/vufind/api/v1/search?type=AllFields&facet[]=institution&page=1&limit=0',
+  success:function(data) {    
+    $('#inst_table').DataTable({
+      data: data.facets.institution,
+        columns: [
+            { title: "Nome", data: "value"}
+        ]
+    });
+  }
+});
+
+}
+
+
+$('.searchable').multiSelect({
+  selectableHeader: "<input type='text' class='search-input' autocomplete='off' placeholder='try \"12\"'>",
+  selectionHeader: "<input type='text' class='search-input' autocomplete='off' placeholder='try \"4\"'>",
+  afterInit: function(ms){
+    var that = this,
+        $selectableSearch = that.$selectableUl.prev(),
+        $selectionSearch = that.$selectionUl.prev(),
+        selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)',
+        selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
+
+    that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+    .on('keydown', function(e){
+      if (e.which === 40){
+        that.$selectableUl.focus();
+        return false;
+      }
+    });
+
+    that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+    .on('keydown', function(e){
+      if (e.which == 40){
+        that.$selectionUl.focus();
+        return false;
+      }
+    });
+  },
+  afterSelect: function(){
+    this.qs1.cache();
+    this.qs2.cache();
+  },
+  afterDeselect: function(){
+    this.qs1.cache();
+    this.qs2.cache();
+  }
+});
+
+
+/*************************************************************************************
+*************************************************************************************
+*************************************************************************************
+*************************************************************************************
+**************************************************************************************/
+  $( function() {
+    $( "#tabs" ).tabs();
+  } );
+
+var tooltip = d3.select("body").append("div").attr("class", "toolTip");
+function createDiv(titleDiv){
+    var divGraph = d3.select("body .wrapper #content")
+                  .append("div")
+                    .style("width", "50%")
+                    .style("float", "right")
+                    .attr("class","teste");
+
+    divGraph
+    .append("div")
+    .attr("class", "titleDiv")
+    .append("h2")
+      .text(titleDiv)
+
+    divGraph  
+      .append("div")
+      .attr("class", "grafico");
+      
+    return divGraph;
+}
+
+
+
+function barGraph(id,titleDiv,url){
+    
+    var svg = d3.select(id)
+              .append("div")
+              .attr("class", "col-sm-6")
+
+    var margin = {top: 20, right: 20, bottom: 105, left: 50},
+        width  = 550 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
+
+    var title = svg.append("h2")
+                  .text(titleDiv);
+
+    var x = d3.scaleBand().range([0, width]).padding(0.1),
+        y = d3.scaleLinear().rangeRound([height, 0]);
+
+    var vg = svg.append("svg")
+             .attr("width", "100%")
+             .attr("height", "400")
+
+    var g = vg.append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    d3.json(url, function(error, data) {
+      if (error) throw error;
+      //console.log(data.facets.institution.slice(0,10));      //console.log(t);      //console.log(data.facets.t.slice(0,10)); //console.log(data.facets[t])
+      
+      var facet   = Object.keys(data.facets);
+      var formats = data.facets[facet].slice(0,10);
+
+      x.domain(formats.map(function(d) { return d.value; }));
+      y.domain([0, d3.max(formats, function(d) { return d.count; })]);
+
+      g.append("g")
+          .attr("class", "axis axis--x")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(x))
+        .selectAll("text")
+          .style("text-anchor", "end")
+          .style("font-size", "11px")
+          .attr("dx", "-.8em")
+          .attr("dy", "-.55em")
+          .attr("transform", "rotate(-90)" );
+
+      g.append("g")
+          .attr("class", "axis axis--y")
+          .call(d3.axisLeft(y).ticks(10,"s"))
+          
+        .append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", "0.71em")
+          .attr("text-anchor", "end")
+          .text("Frequency");
+
+      g.selectAll(".bar")
+        .data(formats)
+        .enter().append("rect")
+          .attr("class", "bar")
+          .attr("x", function(d) { return x(d.value); })
+          .attr("y", function(d) { return y(d.count); })
+          .attr("width", x.bandwidth())
+          .attr("height", function(d) { return height - y(d.count); })
+          .on("mousemove", function(d){
+                tooltip
+                  .style("left", d3.event.pageX - 50 + "px")
+                  .style("top", d3.event.pageY - 70 + "px")
+                  .style("display", "inline-block")
+                  .html((d.value) + "<br>" + (d.count.toLocaleString('de-DE')));
+            })
+          .on("mouseout", function(d){ tooltip.style("display", "none");});
+    });
+}
+
+var url = "/vufind/api/v1/search?type=AllFields&facet[]=format&sort=relevance&page=1&limit=0" //SEARCH DOC BY TYPE
+barGraph("#row-1","Quantidade de Documentos por Tipo",url)
+
+url = "/vufind/api/v1/search?field[]=null&facet[]=institution&sort=relevance&limit=0" // SEARCH DOCs BY INSTITUITION
+barGraph("#row-1","Quantidade de Documentos por instituição", url);
+
+url = "/vufind/api/v1/search?type=AllFields&facet[]=publishDate&sort=relevance&page=1&limit=0" //SEARCH DOCs BY DATE
+barGraph("#row-1","Quantidade de Documentos por Ano", url);
+
+url = "/vufind/api/v1/search?type=AllFields&facet[]=language&page=1&limit=0" //SEARCH DOCs BY language
+barGraph("#row-1","Quantidade de Documentos por Idioma", url);
+
+</script>
