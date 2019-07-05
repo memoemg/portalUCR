@@ -1,0 +1,185 @@
+/* 
+lime #A2C523 //más clarito
+grass #486B00 //intermedio
+forest green #2E4600 //más oscuro
+earth #7D4427 //links
+*/
+
+body {
+    color: #333;
+}
+
+.h1 {
+    color: #7D4427;
+}
+
+.h2 {
+    color: #2E4600;
+}
+
+.h2.flaticon {
+    border-bottom-color: #A2C523;
+}
+
+.h2.flaticon > [class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+    color: #A2C523;
+    font-weight: 300;
+}
+
+.h3 {
+    color: #486B00;
+}
+
+.h4 {
+    color: #A2C523;
+}
+
+.form-control:focus {
+    border-color: #2E4600;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px #A2C523;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px #A2C523;
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px #A2C523;
+}
+
+select.form-control option:hover {
+    background-color: #7D4427;
+}
+
+.jumbotron.franja-presentacion {
+    color: #FFF;
+    background: #7D4427;
+}
+
+.jumbotron.franja-presentacion .subheader {
+    color: #eee;
+}
+
+.searchHomeContent {
+    -webkit-box-shadow: 5px 5px 1px 0px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 5px 5px 1px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 5px 5px 1px 0px rgba(0, 0, 0, 0.25);
+    background-color: #FAFAFA;
+    color: #333;
+}
+
+.searchForm a{
+	color: #2E4600;
+}
+
+.stats-home {
+    color: #FAFAFA;
+}
+
+.stats-home td:nth-child(1) {
+    background-color: #A2C523;
+}
+
+.stats-home td:nth-child(2) {
+    background-color: #2E4600;
+}
+
+.stats-home td:nth-child(3) {
+    background-color: #486B00;
+}
+
+.page-header {
+    color: #7D4427;
+    border-bottom-color: #7D4427;
+}
+
+.browse-item.active {
+    background-color: #486B00;
+}
+
+.browse-item:hover {
+    background-color: #A2C523;
+    color: #FAFAFA;
+}
+
+.result {
+    border-bottom: 1px solid #A2C523;
+    padding: 2em 0;
+}
+
+.result .record-number {
+    background-color: #2E4600;
+    color: #fff;
+}
+
+.result .result-repo {
+    background-color: #eee;
+}
+
+.label-info, .result .format, .sidebar .format {
+    background-color: #2E4600;
+}
+
+.active-filters .facet, .facet-group .active {
+    background-color: #486B00;
+}
+
+.slider-container .slider-handle {
+    background: #2E4600;
+    border-color: #2E4600;
+}
+
+.slider-container .slider-handle:hover, .slider-container .slider-handle:active, .slider-container .slider-handle:focus {
+    background: #A2C523;
+    border-color: #2E4600;
+}
+
+footer .footer-contact {
+    background-color: #486B00;
+    color: #eee;
+}
+
+footer .social-media {
+    background-color: #2E4600;
+}
+
+footer .social-media a {
+    color: #FFF;
+}
+
+footer .social-media a:hover {
+    color: #ddd;
+}
+
+#chartDates svg .amcharts-graph-column path {
+    fill: #486B00;
+    stroke: #2E4600
+}
+
+.amcharts-balloon-bg {
+    stroke: #7D4427;
+}
+
+.amcharts-pie-item:nth-of-type(1) path:first-child, .amcharts-pie-item:nth-of-type(4) path:first-child, .amcharts-pie-item:nth-of-type(7) path:first-child, .amcharts-pie-item:nth-of-type(10) path:first-child {
+    fill: #A2C523;
+}
+
+.amcharts-pie-item:nth-of-type(2) path:first-child, .amcharts-pie-item:nth-of-type(5) path:first-child, .amcharts-pie-item:nth-of-type(8) path:first-child, .amcharts-pie-item:nth-of-type(11) path:first-child {
+    fill: #486B00;
+}
+
+.amcharts-pie-item:nth-of-type(3) path:first-child, .amcharts-pie-item:nth-of-type(6) path:first-child, .amcharts-pie-item:nth-of-type(9) path:first-child, .amcharts-pie-item:nth-of-type(12) path:first-child {
+    fill: #2E4600;
+}
+
+.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus {
+    background-color: #A2C523;
+    border-color: #486B00;
+}
+
+.pagination>li>a, .pagination>li>span {
+    color: #2E4600;
+}
+
+.list-group-item, .result.embedded .getFull.expanded, .result.embedded .loading {
+    border-color: #A2C523;
+}
+
+.list-group-item [class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+    border-color: #A2C523;
+    color:  #A2C523;
+}

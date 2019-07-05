@@ -1,0 +1,79 @@
+<? $this->headTitle($this->translate('Statistics')); ?>
+<? $this->layout()->breadcrumbs = '<li class="active"><a href="http://www.lareferencia.info/">' .  $this->translate('Home') . '</a></li><li class="active">' . $this->translate('Statistics') . '</li> '; 
+?>
+
+  <script src="https://cdn.jsdelivr.net/npm/vega@4.2.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@3.0.0-rc0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@3.18.1"></script>
+
+
+
+<div class="container main-info">
+  <h1 class="page-header"><?=$this->translate('harvesting state statistics')?></h1>
+  <h3><?=$this->translate('Resultado de la última cosecha de nodos nacionales')?></h3>
+  <br/>
+  <div id="vis"></div>
+</div>
+
+
+  <script type="text/javascript">
+    var yourVlSpec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+  "description": "A simple bar chart with embedded data.",
+  "data": {
+"url":"http://www.lareferencia.info:8090/backend/public/listNetworks"
+  },
+  "facet": {
+    "row": {
+      "field": "acronym", "type": "ordinal",
+      "header": {"labelAngle": 0, "title": ""}
+    }
+  },
+  "spec": {
+    "layer": [{
+      "width": 800,
+      "height" : 80,
+      "mark": {"type": "bar", "color": "#eee"},
+      "encoding": {
+        "x": {
+          "field": "lgkSize", "type": "quantitative", "scale": {"nice": false},
+          "title": "#Cosechados"
+        }
+      }
+    },{
+      "mark": {"type": "bar", "color": "lightsteelblue", "size": 10},
+      "encoding": {
+        "x": {"field": "lgkValidSize", "type": "quantitative", "title": "#Válidos"}
+      }
+    },{
+      "mark": {"type": "bar", "color": "steelblue", "size": 10},
+      "encoding": {
+        "x": {"field": "lgkTransformedSize", "type": "quantitative", "title": "#Transformados"}
+      }
+    },{
+      "mark": {"type": "tick", "color": "black"},
+      "encoding": {
+        "x": {"field": "lgkValidSize", "type": "quantitative"}
+      }
+    }]
+  },
+  "resolve": {
+    "scale": {
+      "x": "independent"
+    }
+  },
+  "config": {
+    "tick": {"thickness": 2}
+  }
+} 
+
+
+
+
+    vegaEmbed("#vis", yourVlSpec, { "actions" : {
+    "export": false,
+    "source": false,
+    "compiled": false,
+    "editor": false
+  }});
+  </script>
