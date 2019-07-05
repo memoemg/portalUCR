@@ -1,0 +1,243 @@
+/* 
+plaster #F4EADE //más clarito
+blue #2988BC //intermedio
+sea #2F496E //más oscuro
+coral #ED8C72 //links
+*/
+
+body {
+    color: #333;
+}
+
+.h1 {
+    color: #ED8C72;
+}
+
+.h2 {
+    color: #2F496E;
+}
+
+.h2.flaticon {
+    border-bottom-color: #F4EADE;
+}
+
+.h2.flaticon > [class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+    color: #F4EADE;
+    font-weight: 300;
+}
+
+.h3 {
+    color: #2988BC;
+}
+
+.h4 {
+    color: #F4EADE;
+}
+
+a {
+    color: #ED8C72;
+}
+
+a:hover {
+    color: rgba(118, 54, 37, .8);
+}
+
+nav.navbar {
+    background-color: #F4EADE;
+}
+
+.navbar-header {
+    background-color: #FAFAFA;
+}
+
+.nav a {
+    color: #FFF;
+}
+
+.nav > li.active {
+    background-color: #2F496E;
+    color: #FAFAFA;
+}
+
+.nav>li>a:hover, .nav>li>a:focus, .nav .open>a, .nav .open>a:hover, .nav .open>a:focus, .dropdown-menu>.active>a, .dropdown-menu>.active>a:hover, .dropdown-menu>.active>a:focus {
+    background-color: #2F496E;
+}
+
+.btn-primary {
+    background-color: #F4EADE;
+    color: #333;
+}
+
+.btn-primary:hover {
+    background-color: #2F496E;
+    color: #FAFAFA;
+}
+
+.form-control:focus {
+    border-color: #2F496E;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px #F4EADE;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px #F4EADE;
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px #F4EADE;
+}
+
+select.form-control option:hover {
+    background-color: #ED8C72;
+}
+
+.jumbotron.franja-presentacion {
+    color: #FFF;
+    background: #ED8C72;
+}
+
+.jumbotron.franja-presentacion .subheader {
+    color: #eee;
+}
+
+.searchHomeContent {
+    -webkit-box-shadow: 5px 5px 1px 0px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 5px 5px 1px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 5px 5px 1px 0px rgba(0, 0, 0, 0.25);
+    background-color: #FAFAFA;
+    color: #333;
+}
+
+.searchForm a{
+	color: #2F496E;
+}
+
+.stats-home {
+    color: #FAFAFA;
+}
+
+.stats-home td:nth-child(1) {
+    background-color: #F4EADE;
+}
+
+.stats-home td:nth-child(2) {
+    background-color: #2F496E;
+}
+
+.stats-home td:nth-child(3) {
+    background-color: #2988BC;
+}
+
+.page-header {
+    color: #ED8C72;
+    border-bottom-color: #ED8C72;
+}
+
+.browse-item.active {
+    background-color: #2988BC;
+}
+
+.browse-item:hover {
+    background-color: #F4EADE;
+    color: #FAFAFA;
+}
+
+.badge {
+    background-color: #ED8C72;
+}
+
+.result {
+    border-bottom: 1px solid #F4EADE;
+    padding: 2em 0;
+}
+
+.result .record-number {
+    background-color: #2F496E;
+    color: #fff;
+}
+
+.result .result-repo {
+    background-color: #eee;
+}
+
+.label-info, .result .format, .sidebar .format {
+    background-color: #2F496E;
+}
+
+.facet-group .collapse, .facet-group .collapsing, .facet-group > .facet {
+    border-left: 1px solid #F4EADE;
+    border-right: 1px solid #F4EADE;
+}
+
+.facet-group .facet {
+    border-bottom: 1px solid #F4EADE;
+}
+
+.active-filters .facet, .facet-group .active {
+    background-color: #2988BC;
+}
+
+.slider-container .slider-handle {
+    background: #2F496E;
+    border-color: #2F496E;
+}
+
+.slider-container .slider-handle:hover, .slider-container .slider-handle:active, .slider-container .slider-handle:focus {
+    background: #F4EADE;
+    border-color: #2F496E;
+}
+
+[id^="side-panel-"] > .title {
+    background-color: #2F496E;
+    color: #FFF;
+    border-color: #2F496E;
+}
+
+footer .footer-contact {
+    background-color: #2988BC;
+    color: #eee;
+}
+
+footer .social-media {
+    background-color: #2F496E;
+}
+
+footer .social-media a {
+    color: #FFF;
+}
+
+footer .social-media a:hover {
+    color: #ddd;
+}
+
+#chartDates svg .amcharts-graph-column path {
+    fill: #2988BC;
+    stroke: #2F496E
+}
+
+.amcharts-balloon-bg {
+    stroke: #ED8C72;
+}
+
+.amcharts-pie-item:nth-of-type(1) path:first-child, .amcharts-pie-item:nth-of-type(4) path:first-child, .amcharts-pie-item:nth-of-type(7) path:first-child, .amcharts-pie-item:nth-of-type(10) path:first-child {
+    fill: #F4EADE;
+}
+
+.amcharts-pie-item:nth-of-type(2) path:first-child, .amcharts-pie-item:nth-of-type(5) path:first-child, .amcharts-pie-item:nth-of-type(8) path:first-child, .amcharts-pie-item:nth-of-type(11) path:first-child {
+    fill: #2988BC;
+}
+
+.amcharts-pie-item:nth-of-type(3) path:first-child, .amcharts-pie-item:nth-of-type(6) path:first-child, .amcharts-pie-item:nth-of-type(9) path:first-child, .amcharts-pie-item:nth-of-type(12) path:first-child {
+    fill: #2F496E;
+}
+
+.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus {
+    background-color: #F4EADE;
+    border-color: #2988BC;
+}
+
+.pagination>li>a, .pagination>li>span {
+    color: #2F496E;
+}
+
+.list-group-item, .result.embedded .getFull.expanded, .result.embedded .loading {
+    border-color: #F4EADE;
+}
+
+.list-group-item [class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+    border-color: #F4EADE;
+    color:  #F4EADE;
+}
